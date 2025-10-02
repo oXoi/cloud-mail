@@ -76,16 +76,14 @@
 ## Support
 
 
-<a href="https://doc.skymail.ink/support.html">
-<img width="170px" src="./doc/images/support.png" alt="">
+buy me a RTX 9080🤩
+<img width="170px" src="./doc/images/rtx9080.png" alt="">
 </a><br><br>
 
 
 **Special Sponsors**
 
-[DartNode](https://dartnode.com)：Providing cloud computing service resource support.
-
-[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
+You
 
 ## License
 
