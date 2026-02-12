@@ -30,15 +30,16 @@
 </p>
 
 ## Description
+
 With only one domain, you can create multiple different email addresses, similar to major email platforms. This project can be deployed on Cloudflare Workers to reduce server costs and build your own email service.
+
 ## Project Showcase
 
 - [Live Demo](https://skymail.ink)<br>
 - [Deployment Guide](https://doc.skymail.ink/en/)<br>
 
-
 | ![](/doc/demo/demo1.png) | ![](/doc/demo/demo2.png) |
-|--------------------------|--------------------------|
+| ------------------------ | ------------------------ |
 | ![](/doc/demo/demo3.png) | ![](/doc/demo/demo4.png) |
 
 ## Features
@@ -89,53 +90,46 @@ With only one domain, you can create multiple different email addresses, similar
 
 ```
 cloud-mail
-├── mail-worker				    # Backend worker project
+├── mail-worker                    # Backend worker project
 │   ├── src                  
-│   │   ├── api	 			    # API layer
-│   │   ├── const  			    # Project constants
+│   │   ├── api                     # API layer
+│   │   ├── const                  # Project constants
 │   │   ├── dao                 # Data access layer
-│   │   ├── email			    # Email processing and handling
-│   │   ├── entity			    # Database entities
-│   │   ├── error			    # Custom exceptions
-│   │   ├── hono			    # Web framework, middleware, error handling
-│   │   ├── i18n			    # Internationalization
-│   │   ├── init			    # Database and cache initialization
-│   │   ├── model			    # Response data models
-│   │   ├── security			# Authentication and authorization
-│   │   ├── service			    # Business logic layer
-│   │   ├── template			# Message templates
-│   │   ├── utils			    # Utility functions
-│   │   └── index.js			# Entry point
-│   ├── package.json			# Project dependencies
-│   └── wrangler.toml			# Project configuration
+│   │   ├── email                # Email processing and handling
+│   │   ├── entity                # Database entities
+│   │   ├── error                # Custom exceptions
+│   │   ├── hono                # Web framework, middleware, error handling
+│   │   ├── i18n                # Internationalization
+│   │   ├── init                # Database and cache initialization
+│   │   ├── model                # Response data models
+│   │   ├── security            # Authentication and authorization
+│   │   ├── service                # Business logic layer
+│   │   ├── template            # Message templates
+│   │   ├── utils                # Utility functions
+│   │   └── index.js            # Entry point
+│   ├── package.json            # Project dependencies
+│   └── wrangler.toml            # Project configuration
 │
-├─ mail-vue				        # Frontend Vue project
+├─ mail-vue                        # Frontend Vue project
 │   ├── src
-│   │   ├── axios 			    # Axios configuration
-│   │   ├── components			# Custom components
-│   │   ├── echarts			    # ECharts integration
-│   │   ├── i18n			    # Internationalization
-│   │   ├── init			    # Startup initialization
-│   │   ├── layout			    # Main layout components
-│   │   ├── perm			    # Permissions and access control
-│   │   ├── request			    # API request layer
-│   │   ├── router			    # Router configuration
-│   │   ├── store			    # Global state management
-│   │   ├── utils			    # Utility functions
-│   │   ├── views			    # Page components
-│   │   ├── app.vue			    # Root component
-│   │   ├── main.js			    # Entry JS file
-│   │   └── style.css			# Global styles
-│   ├── package.json			# Project dependencies
-└── └── env.release				# Environment configuration
-
+│   │   ├── axios                 # Axios configuration
+│   │   ├── components            # Custom components
+│   │   ├── echarts                # ECharts integration
+│   │   ├── i18n                # Internationalization
+│   │   ├── init                # Startup initialization
+│   │   ├── layout                # Main layout components
+│   │   ├── perm                # Permissions and access control
+│   │   ├── request                # API request layer
+│   │   ├── router                # Router configuration
+│   │   ├── store                # Global state management
+│   │   ├── utils                # Utility functions
+│   │   ├── views                # Page components
+│   │   ├── app.vue                # Root component
+│   │   ├── main.js                # Entry JS file
+│   │   └── style.css            # Global styles
+│   ├── package.json            # Project dependencies
+└── └── env.release                # Environment configuration
 ```
-
-## Support
-
-<a href="https://doc.skymail.ink/support.html">
-<img width="170px" src="./doc/images/support.png" alt="">
-</a>
 
 ## License
 
