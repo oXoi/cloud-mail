@@ -11,5 +11,6 @@ export const useSettingStore = defineStore('setting', {
     }),
     actions: {
 
-    }
+    },
+    persist: true
 })

@@ -16,6 +16,9 @@
       <div v-else class="dark-icon icon-item" @click="openDark($event)">
         <Icon icon="solar:moon-linear"/>
       </div>
+      <div class="lang-icon icon-item" @click="toggleLang">
+        <Icon icon="material-symbols:language"/>
+      </div>
       <div class="notice icon-item" @click="openNotice">
         <Icon icon="streamline-plump:announcement-megaphone"/>
       </div>
@@ -189,6 +192,10 @@ function changeLang(lang) {
 
 function openNotice() {
   uiStore.showNotice()
+}
+
+function toggleLang() {
+  changeLang(settingStore.lang === 'zh' ? 'en' : 'zh')
 }
 
 function openDark(e) {
