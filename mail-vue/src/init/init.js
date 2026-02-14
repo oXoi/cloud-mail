@@ -1,10 +1,10 @@
-import {useUserStore} from "@/store/user.js";
-import {useSettingStore} from "@/store/setting.js";
-import {useAccountStore} from "@/store/account.js";
-import {loginUserInfo} from "@/request/my.js";
-import {permsToRouter} from "@/perm/perm.js";
+import { useUserStore } from "@/store/user.js";
+import { useSettingStore } from "@/store/setting.js";
+import { useAccountStore } from "@/store/account.js";
+import { loginUserInfo } from "@/request/my.js";
+import { permsToRouter } from "@/perm/perm.js";
 import router from "@/router";
-import {websiteConfig} from "@/request/setting.js";
+import { websiteConfig } from "@/request/setting.js";
 import i18n from "@/i18n/index.js";
 
 export async function init() {
@@ -15,10 +15,16 @@ export async function init() {
     const accountStore = useAccountStore();
 
     const token = localStorage.getItem('token');
+    console.log('Current persisted lang:', settingStore.lang);
     if (!settingStore.lang) {
-        let lang = navigator.language.split('-')[0]
-        lang = lang === 'zh' ? lang : 'en'
-        settingStore.lang = lang
+        const navLang = navigator.language || navigator.userLanguage || 'en';
+        console.log('Detected browser language:', navLang);
+        // Check if language starts with 'zh' (case-insensitive) to capture zh-CN, zh-TW, zh_CN, etc.
+        const isChinese = navLang.toLowerCase().includes('zh');
+        settingStore.lang = isChinese ? 'zh' : 'en';
+        console.log('Auto-set language to:', settingStore.lang);
+    } else {
+        console.log('Using persisted language:', settingStore.lang);
     }
 
     i18n.global.locale.value = settingStore.lang
@@ -66,6 +72,6 @@ function removeLoading() {
     doc.classList.add('loading-hide')
     setTimeout(() => {
         doc.remove()
-    },1000)
+    }, 1000)
 }
 
