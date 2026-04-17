@@ -9,8 +9,6 @@ import BizError from '../error/biz-error';
 import {t} from '../i18n/i18n'
 import verifyRecordService from './verify-record-service';
 
-const SAFE_DEFAULT_TITLE = 'Distributed scanning system';
-
 const settingService = {
 
 	async refresh(c) {
@@ -30,10 +28,6 @@ const settingService = {
 
 		if (!setting) {
 			throw new BizError('数据库未初始化 Database not initialized.');
-		}
-
-		if (!setting.title || setting.title === 'domain-admin') {
-			setting.title = SAFE_DEFAULT_TITLE;
 		}
 
 		let domainList = c.env.domain;
