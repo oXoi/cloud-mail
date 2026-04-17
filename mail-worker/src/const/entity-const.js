@@ -137,6 +137,13 @@ export const settingConst = {
 export const verifyRecordType = {
 	REG: 0,
 	ADD: 1,
+	LOGIN: 2,
+}
+
+export const loginSecurityConst = {
+	FAIL_WINDOW_MINUTES: 15,
+	MAX_FAILED_ATTEMPTS: 10,
+	LOCK_HOURS: 3,
 }
 
 

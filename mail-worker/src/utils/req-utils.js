@@ -1,9 +1,10 @@
 import { UAParser } from 'ua-parser-js';
 const reqUtils = {
 	getIp(c) {
-		return  c.req.header('CF-Connecting-IP') ||
+		const ip = c.req.header('CF-Connecting-IP') ||
 			c.req.header('X-Forwarded-For') ||
 			'Unknown';
+		return ip.split(',')[0].trim();
 	},
 
 	getUserAgent(c) {

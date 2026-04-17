@@ -10,7 +10,7 @@ node_modules
 dist-ssr
 *.local
 dist
-
+updates.md
 .vscode/*
 !.vscode/extensions.json
 .idea

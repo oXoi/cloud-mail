@@ -1,7 +1,7 @@
 import BizError from '../error/biz-error';
 import userService from './user-service';
 import emailUtils from '../utils/email-utils';
-import { isDel, settingConst, userConst } from '../const/entity-const';
+import { isDel, loginSecurityConst, settingConst, userConst } from '../const/entity-const';
 import JwtUtils from '../utils/jwt-utils';
 import { v4 as uuidv4 } from 'uuid';
 import KvConst from '../const/kv-const';
@@ -21,6 +21,42 @@ import { t } from '../i18n/i18n.js';
 import verifyRecordService from './verify-record-service';
 
 const loginService = {
+
+	invalidLoginError() {
+		return new BizError(t('invalidLoginCredentials'), 403);
+	},
+
+	async ensureLoginAllowed(c) {
+		const state = await verifyRecordService.loginLockState(
+			c,
+			loginSecurityConst.MAX_FAILED_ATTEMPTS,
+			loginSecurityConst.FAIL_WINDOW_MINUTES,
+			loginSecurityConst.LOCK_HOURS
+		);
+
+		if (state.locked) {
+			throw new BizError(t('loginTooManyAttempts', {
+				hours: loginSecurityConst.LOCK_HOURS,
+				minutes: state.remainingMinutes
+			}), 403);
+		}
+	},
+
+	async recordLoginFailure(c) {
+		const state = await verifyRecordService.increaseLoginCount(
+			c,
+			loginSecurityConst.MAX_FAILED_ATTEMPTS,
+			loginSecurityConst.FAIL_WINDOW_MINUTES,
+			loginSecurityConst.LOCK_HOURS
+		);
+
+		if (state.locked) {
+			throw new BizError(t('loginTooManyAttempts', {
+				hours: loginSecurityConst.LOCK_HOURS,
+				minutes: state.remainingMinutes
+			}), 403);
+		}
+	},
 
 	async register(c, params, oauth = false) {
 
@@ -207,22 +243,40 @@ const loginService = {
 			throw new BizError(t('emailAndPwdEmpty'));
 		}
 
+		if (!noVerifyPwd) {
+			await this.ensureLoginAllowed(c);
+		}
+
 		const userRow = await userService.selectByEmailIncludeDel(c, email);
 
 		if (!userRow) {
-			throw new BizError(t('notExistUser'));
+			if (!noVerifyPwd) {
+				await this.recordLoginFailure(c);
+			}
+			throw this.invalidLoginError();
 		}
 
 		if(userRow.isDel === isDel.DELETE) {
-			throw new BizError(t('isDelUser'));
+			if (!noVerifyPwd) {
+				await this.recordLoginFailure(c);
+			}
+			throw this.invalidLoginError();
 		}
 
 		if(userRow.status === userConst.status.BAN) {
-			throw new BizError(t('isBanUser'));
+			if (!noVerifyPwd) {
+				await this.recordLoginFailure(c);
+			}
+			throw this.invalidLoginError();
 		}
 
 		if (!await cryptoUtils.verifyPassword(password, userRow.salt, userRow.password) && !noVerifyPwd) {
-			throw new BizError(t('IncorrectPwd'));
+			await this.recordLoginFailure(c);
+			throw this.invalidLoginError();
+		}
+
+		if (!noVerifyPwd) {
+			await verifyRecordService.clearLoginCount(c);
 		}
 
 		const uuid = uuidv4();
